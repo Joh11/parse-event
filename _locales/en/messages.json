@@ -9,9 +9,9 @@
 	"description": "Description of the add-on."
     },
 
-    "menuItemSelectionLogger": {
-	"message": "Log '%s' to the browser console",
-	"description": "Title of context menu item that logs the selected text when clicked."
+    "menuItemParseEvent": {
+	"message": "Parse event ...",
+	"description": "Title of context menu item that parses the event when clicked."
     }
 
 }

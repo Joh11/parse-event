@@ -23,7 +23,15 @@ browser.menus.onClicked.addListener((info, tab) => {
     case "log-selection":
 	// For now just print the output of the parsing step
 	console.log(info.selectionText);
-	console.log(parseEvent(info.selectionText));
+	obj = parseEvent(info.selectionText);
+	console.log(obj);
+	// Send the object to the ics generation
+	icsContent = parsedObjectToIcs(obj);
+	console.log(icsContent);
+
+	blob = new Blob([icsContent], {type: "text/calendar"});
+	url = URL.createObjectURL(blob);
+	browser.downloads.download({url: url})
 	break;
     }
 });
@@ -82,4 +90,39 @@ function parseDate(str)
 		day: Number(res[3])};
     }
     return null;
+}
+
+// -----------------------------------------------------------------------------
+// Create the ics file content
+// -----------------------------------------------------------------------------
+
+function datetimeValue(year, month, day, hour, minute, second, localTime = true)
+{
+    utcSuffix = localTime ? "" : "Z";
+    month = ('00' + month).slice(-2)
+    day = ('00' + day).slice(-2)
+    hour = ('00' + hour).slice(-2)
+    minute = ('00' + minute).slice(-2)
+    second = ('00' + second).slice(-2)
+    return `${year}${month}${day}T${hour}${minute}${second}${utcSuffix}`;
+}
+
+function parsedObjectToIcs(obj)
+{
+    monthNum = {january: "01", february: "02", march: "03", april: "04", may: "05", june: "06", july: "07", august: "08", september: "09", october: "10", november: "11", december: "12"}[obj.date.month]
+    
+    time = obj.time.replace(':', '');
+    
+    return `BEGIN:VCALENDAR\r
+VERSION:2.0\r
+PRODID:-//hacksw/handcal//NONSGML v1.0//EN\r
+BEGIN:VEVENT\r
+DTSTAMP:19980119T070000Z\r
+UID:19960401T080045Z-4000F192713-0052@example.com\r
+DTSTART:${datetimeValue(2020, monthNum, obj.date.day, 22, 00, 00)}\r
+DTEND:${datetimeValue(2020, monthNum, obj.date.day, 23, 00, 00)}\r
+SUMMARY:${obj.zoomLink}\r
+END:VEVENT\r
+END:VCALENDAR\r
+`;
 }

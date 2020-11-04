@@ -1,0 +1,12 @@
+#+title: Parse-event: A Firefox extension to generate iCal event files automatically
+
+*still WIP*
+
+* Usage
+- Select the text containing the event informations (date, time, Zoom
+  link...).
+- Right click > Parse event...
+- Save the file somewhere
+- Open it with your usual calendar software / upload it on your
+  calendar webclient
+

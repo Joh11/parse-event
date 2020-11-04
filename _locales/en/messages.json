@@ -1,0 +1,17 @@
+{
+    "extensionName": {
+	"message": "Parse-event",
+	"description": "Name of the extension."
+    },
+
+    "extensionDescription": {
+	"message": "Turn the selection into a .ics event file",
+	"description": "Description of the add-on."
+    },
+
+    "menuItemSelectionLogger": {
+	"message": "Log '%s' to the browser console",
+	"description": "Title of context menu item that logs the selected text when clicked."
+    }
+
+}
